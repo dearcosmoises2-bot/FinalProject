@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Landfill e-Forms Application – Ascent</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  
+  <nav class="topbar">
+    <!-- Brand / logo (top-left) -->
+    <a href="#" class="brand">
+      <svg class="brand-logo" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="26" height="26" rx="5" fill="#1a56a0"/>
+        <polyline points="6,13 10.5,17.5 20,8" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Ascent
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#">Programs</a></li>
+      <li><a href="#">Assessment &#9662;</a></li>
+      <li><a href="#">Resources &#9662;</a></li>
+    </ul>
+
+    <div class="spacer"></div>
+
+    <div class="nav-right">
+      <!-- GitHub logo (top-right) -->
+      <a href="#" aria-label="GitHub">
+        <svg class="github-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303
+            3.438 9.8 8.205 11.385.6.113.82-.258.82-.577
+            0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61
+            C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729
+            1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305
+            3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93
+            0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176
+            0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405
+            1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23
+            3.285-1.23.645 1.653.24 2.873.12 3.176.765.84
+            1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475
+            5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015
+            3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592
+            24 12.297c0-6.627-5.373-12-12-12"/>
+        </svg>
+      </a>
+      <!-- Theme dropdown -->
+      <div class="theme-dropdown" id="themeDropdown">
+        <button class="theme-btn" id="themeToggle" aria-haspopup="true" aria-expanded="false">
+          Theme &#9662;
+        </button>
+        <ul class="theme-menu" id="themeMenu" role="menu">
+          <li role="menuitem" data-theme="light">Light</li>
+          <li role="menuitem" data-theme="dark">Dark</li>
+          <li role="menuitem" data-theme="system">System</li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const toggle = document.getElementById('themeToggle');
+      const menu = document.getElementById('themeMenu');
+      const dropdown = document.getElementById('themeDropdown');
+
+      // Apply a theme to <html> via data-theme attribute
+      function applyTheme(theme) {
+        if (theme === 'system') {
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          root.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+        } else {
+          root.setAttribute('data-theme', theme);
+        }
+      }
+
+      // Load saved preference or default to system
+      const saved = localStorage.getItem('theme') || 'system';
+      applyTheme(saved);
+
+      // Mark active item
+      function updateActive(theme) {
+        menu.querySelectorAll('li').forEach(li => {
+          li.classList.toggle('active', li.dataset.theme === theme);
+        });
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+      updateActive(saved);
+
+      // Toggle menu open/close
+      toggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        const isOpen = menu.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      // Select a theme
+      menu.addEventListener('click', function (e) {
+        const li = e.target.closest('li[data-theme]');
+        if (!li) return;
+        const theme = li.dataset.theme;
+        localStorage.setItem('theme', theme);
+        applyTheme(theme);
+        updateActive(theme);
+        menu.classList.remove('open');
+      });
+
+      // Close when clicking outside
+      document.addEventListener('click', function () {
+        menu.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+
+      // React to OS preference changes when in system mode
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {
+        if ((localStorage.getItem('theme') || 'system') === 'system') applyTheme('system');
+      });
+    })();
+  </script>
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <a href="#">Projects</a> / Landfill e-Forms Application
+  </div>
+
+  <!-- Main content -->
+  <div class="container">
+    <h1 class="page-title">Landfill e-Forms Application</h1>
+
+    <p class="description">
+      The landfill e-forms project converts the City of Los Angeles, Department of Sanitation's methane emission
+      auditing system from paper to fully electronic in order to improve efficiency, reduce human error, and speed
+      up report production. This project consists of two applications: a mobile application and a web application
+      for desktop use. The mobile application runs under the Android Operating System and will be used by inspectors
+      in the field. The web application is developed with an Angular 4 front-end and a Java/Spring back-end. The
+      user is able to upload/download data to and from the web application through a hardwired sync when connected
+      to a mobile device running the mobile application. The web application serves as the main source for data
+      entry, data search, and generating reports.
+    </p>
+
+    <p class="liaisons">
+      <strong>Liaisons:</strong> John Cobb Hamilton, William Andrews
+    </p>
+
+    <!-- Student Team / Project Sponsor grid -->
+    <div class="info-grid">
+      <!-- Left column -->
+      <div>
+        <div class="cell-header">Student Team</div>
+        <div class="cell"><p>Andres Adame</p></div>
+        <div class="cell"><p>Teky Alvarado</p></div>
+        <div class="cell"><p>Jose Gonzalez</p></div>
+        <div class="cell"><p>Alvin Quach</p></div>
+      </div>
+      <!-- Right column -->
+      <div>
+        <div class="cell-header">Project Sponsor</div>
+        <div class="cell">
+          <p><a href="#">City of Los Angeles, Dept of Sanitation</a></p>
+        </div>
+        <div class="cell-header">Project Liaisons</div>
+        <div class="cell-header">Faculty Advisors</div>
+        <div class="cell">
+          <p><a href="#">Russ Abbott</a></p>
+          <p><a href="#">Jungsoo (Soo) Lim</a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resources -->
+    <div class="resources-section">
+      <div class="resources-header">Resources</div>
+
+      <div class="resource-row">
+        <a href="#">Final Report</a>
+        <span class="download-btn">&#8681;</span>
+      </div>
+
+      <div class="resource-row">
+        <a href="#">GitHub</a>
+      </div>
+
+      <div class="resource-row">
+        <a href="#">Landfill Forms Software Requirements Document</a>
+        <span class="download-btn">&#8681;</span>
+      </div>
+
+      <div class="resource-row">
+        <a href="#">Landfill Forms Software Design Specification</a>
+        <span class="download-btn">&#8681;</span>
+      </div>
+
+      <div class="resource-row">
+        <a href="#">Presentation Slides</a>
+        <span class="download-btn">&#8681;</span>
+      </div>
+
+      <div class="resource-row">
+        <a href="#">Project Poster</a>
+        <span class="download-btn">&#8681;</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>Copyright &copy; Chengyu Sun 2022-2024.</p>
+    <p>Logo and favicon made by <a href="#">Freepik</a> from <a href="#">www.flaticon.com</a></p>
+  </footer>
+
+</body>
+</html>
