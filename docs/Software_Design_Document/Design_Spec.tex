@@ -1,0 +1,339 @@
+% ============================================================
+%  Docker Dependency Specification – Landfill e-Forms Application
+%  City of Los Angeles, Department of Sanitation
+%  Cal State LA Senior Design 2017–2018
+% ============================================================
+\documentclass[12pt,letterpaper]{article}
+
+% ── Packages ────────────────────────────────────────────────
+\usepackage[margin=1in]{geometry}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{parskip}
+\usepackage{listings}
+\usepackage{microtype}
+\usepackage{colortbl}
+\usepackage{cellspace}
+
+% ── Colours ─────────────────────────────────────────────────
+\definecolor{headerblue}{HTML}{1F5C99}
+\definecolor{subblue}{HTML}{2E75B6}
+\definecolor{rowshade}{HTML}{EFF4FB}
+\definecolor{codebg}{HTML}{F4F4F4}
+\definecolor{muted}{HTML}{555555}
+\definecolor{tablerule}{HTML}{CCCCCC}
+
+% ── Hyperlinks ───────────────────────────────────────────────
+\hypersetup{
+  colorlinks=true,
+  linkcolor=headerblue,
+  urlcolor=headerblue
+}
+
+% ── Header / Footer ─────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\color{muted}\small Landfill e-Forms Application\ |\ Docker Dependency Specification}
+\cfoot{\color{muted}\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% ── Section formatting ───────────────────────────────────────
+\titleformat{\section}
+  {\large\bfseries\color{headerblue}}
+  {}
+  {0em}
+  {}
+  [\color{headerblue}\titlerule]
+
+\titleformat{\subsection}
+  {\normalsize\bfseries\color{subblue}}
+  {}
+  {0em}
+  {}
+
+% ── Table helpers ────────────────────────────────────────────
+\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.35}
+
+\newcommand{\hdrrow}[1]{%
+  \rowcolor{headerblue}%
+  \color{white}\textbf{#1}%
+}
+
+% ── Code listing style ───────────────────────────────────────
+\lstset{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{codebg},
+  frame=single,
+  framerule=0.4pt,
+  rulecolor=\color{tablerule},
+  breaklines=true,
+  captionpos=b,
+  xleftmargin=0.5cm,
+  xrightmargin=0.5cm
+}
+
+% ============================================================
+\begin{document}
+
+% ── Title Block ──────────────────────────────────────────────
+\begin{center}
+  {\Huge\bfseries\color{headerblue} Landfill e-Forms Application}\\[0.5em]
+  {\Large\color{subblue} Docker Dependency Specification}\\[0.8em]
+  {\small\color{muted}
+    City of Los Angeles, Department of Sanitation
+    \enspace$\cdot$\enspace
+    Cal State LA Senior Design 2017--2018}
+\end{center}
+
+\vspace{1em}
+\hrule height 0.8pt
+\vspace{1.5em}
+
+
+
+% ============================================================
+\section{Docker Images}
+
+Four Docker images must be pulled before building or running any container.
+
+\vspace{0.5em}
+\begin{longtable}{>{\ttfamily}p{4.2cm} p{5.8cm} p{3.2cm}}
+  \rowcolor{headerblue}
+  \color{white}\textbf{Image} &
+  \color{white}\textbf{Role} &
+  \color{white}\textbf{Source} \\
+  \endfirsthead
+  \rowcolor{headerblue}
+  \color{white}\textbf{Image} &
+  \color{white}\textbf{Role} &
+  \color{white}\textbf{Source} \\
+  \endhead
+  openjdk:8-jdk-alpine  & Spring Boot back-end JAR runtime          & Docker Hub \\
+  \rowcolor{rowshade}
+  mysql:5.7             & Relational database server                 & Docker Hub \\
+  node:6-alpine         & Angular 4 front-end build stage            & Docker Hub \\
+  \rowcolor{rowshade}
+  nginx:alpine          & Serves compiled Angular static bundle      & Docker Hub \\
+\end{longtable}
+
+% ============================================================
+\section{Back-End Container \textnormal{\small(\texttt{openjdk:8-jdk-alpine})}}
+
+All Java dependencies are resolved at build time by Maven from the project
+\texttt{pom.xml}. The resulting fat-JAR bundles everything listed below —
+no manual installation is required inside the running container.
+
+\vspace{0.5em}
+\begin{longtable}{p{5.5cm} p{1.8cm} p{6cm}}
+  \rowcolor{headerblue}
+  \color{white}\textbf{Dependency (artifactId)} &
+  \color{white}\textbf{Version} &
+  \color{white}\textbf{Purpose} \\
+  \endfirsthead
+  \rowcolor{headerblue}
+  \color{white}\textbf{Dependency (artifactId)} &
+  \color{white}\textbf{Version} &
+  \color{white}\textbf{Purpose} \\
+  \endhead
+  spring-boot-starter-web       & 2.x    & Spring MVC REST controllers + embedded Tomcat \\
+  \rowcolor{rowshade}
+  spring-boot-starter-data-jpa  & 2.x    & Spring Data JPA repository layer \\
+  spring-boot-starter-security  & 2.x    & Authentication \& role-based authorisation \\
+  \rowcolor{rowshade}
+  hibernate-core                & 5.x    & JPA implementation / ORM / SQL generation \\
+  mysql-connector-java          & 5.1.x  & JDBC driver for MySQL 5.7 \\
+  \rowcolor{rowshade}
+  jjwt                          & 0.9.x  & JSON Web Token creation \& validation \\
+  jasperreports                 & 6.x    & PDF \& CSV report generation \\
+  \rowcolor{rowshade}
+  spring-boot-maven-plugin      & 2.x    & Packages application as executable fat-JAR \\
+  maven-compiler-plugin         & 3.x    & Compiles Java 8 source \\
+  \rowcolor{rowshade}
+  lombok                        & 1.18.x & Boilerplate reduction (getters/setters/builders) \\
+\end{longtable}
+
+\vspace{0.5em}
+Build command executed inside the container build stage:
+
+\begin{lstlisting}[language=bash]
+mvn clean package -DskipTests
+\end{lstlisting}
+
+% ============================================================
+\section{Front-End Build Container \textnormal{\small(\texttt{node:6-alpine})}}
+
+\texttt{npm install} resolves all dependencies listed in \texttt{package.json}.
+The compiled static bundle is then copied into the Nginx container; the Node
+container is discarded after the build stage.
+
+\vspace{0.5em}
+\begin{longtable}{p{5.5cm} p{1.8cm} p{6cm}}
+  \rowcolor{headerblue}
+  \color{white}\textbf{Package} &
+  \color{white}\textbf{Version} &
+  \color{white}\textbf{Purpose} \\
+  \endfirsthead
+  \rowcolor{headerblue}
+  \color{white}\textbf{Package} &
+  \color{white}\textbf{Version} &
+  \color{white}\textbf{Purpose} \\
+  \endhead
+  @angular/core              & 4.x   & Core Angular framework \\
+  \rowcolor{rowshade}
+  @angular/common            & 4.x   & Common directives \& pipes \\
+  @angular/compiler          & 4.x   & Template compiler \\
+  \rowcolor{rowshade}
+  @angular/forms             & 4.x   & Reactive \& template-driven forms \\
+  @angular/http              & 4.x   & HTTP client module \\
+  \rowcolor{rowshade}
+  @angular/router            & 4.x   & Client-side routing \\
+  @angular/platform-browser  & 4.x   & Browser rendering platform \\
+  \rowcolor{rowshade}
+  rxjs                       & 5.x   & Reactive extensions / observable HTTP calls \\
+  bootstrap                  & 3.x   & Responsive CSS grid \& UI components \\
+  \rowcolor{rowshade}
+  zone.js                    & 0.8.x & Angular change-detection runtime \\
+  typescript                 & 2.x   & Typed superset of JavaScript \\
+  \rowcolor{rowshade}
+  @angular/cli               & 1.x   & Build toolchain, dev server, \texttt{ng build -{}-prod} \\
+  @angular/compiler-cli      & 4.x   & Ahead-of-time (AOT) compiler \\
+  \rowcolor{rowshade}
+  webpack                    & 2.x   & Module bundler (used internally by Angular CLI) \\
+\end{longtable}
+
+\vspace{0.5em}
+Build command executed inside the Node build stage:
+
+\begin{lstlisting}[language=bash]
+npm install && ng build --prod --aot
+\end{lstlisting}
+
+% ============================================================
+\section{Web-Server Container \textnormal{\small(\texttt{nginx:alpine})}}
+
+No additional packages are installed inside this container. The following
+configuration is applied:
+
+\begin{itemize}[noitemsep]
+  \item \texttt{nginx:alpine} base image
+  \item Compiled Angular bundle copied into \texttt{/usr/share/nginx/html}
+  \item Custom \texttt{nginx.conf} to proxy \texttt{/api/*} requests to the
+        Spring Boot back-end container
+  \item \texttt{try\_files \$uri \$uri/ /index.html} for Angular client-side routing
+\end{itemize}
+
+% ============================================================
+\section{Database Container \textnormal{\small(\texttt{mysql:5.7})}}
+
+No additional packages are installed inside this container. Initialisation
+is handled via Docker volume mounts:
+
+\begin{itemize}[noitemsep]
+  \item \texttt{mysql:5.7} base image — no additional packages required
+  \item \texttt{schema.sql} mounted as a Docker volume for database
+        initialisation on first run
+  \item Environment variables required: \texttt{MYSQL\_ROOT\_PASSWORD},
+        \texttt{MYSQL\_DATABASE}, \texttt{MYSQL\_USER}, \texttt{MYSQL\_PASSWORD}
+\end{itemize}
+
+% ============================================================
+\section{Android Mobile Application \textnormal{\small(not containerised)}}
+
+The Android app runs on the inspector's device, not inside Docker. It is
+built locally via Gradle. The following dependencies are declared in
+\texttt{build.gradle} and downloaded from Maven Central / Google Maven at
+build time:
+
+\vspace{0.5em}
+\begin{longtable}{p{5.5cm} p{1.8cm} p{6cm}}
+  \rowcolor{headerblue}
+  \color{white}\textbf{Dependency} &
+  \color{white}\textbf{Version} &
+  \color{white}\textbf{Purpose} \\
+  \endfirsthead
+  \rowcolor{headerblue}
+  \color{white}\textbf{Dependency} &
+  \color{white}\textbf{Version} &
+  \color{white}\textbf{Purpose} \\
+  \endhead
+  appcompat-v7                    & 27.x & Material UI components \& back-compat \\
+  \rowcolor{rowshade}
+  support:design                  & 27.x & Navigation drawer, FAB, Snackbar \\
+  retrofit2:retrofit              & 2.x  & Type-safe REST HTTP client \\
+  \rowcolor{rowshade}
+  retrofit2:converter-gson        & 2.x  & JSON $\to$ Java object conversion \\
+  gson                            & 2.x  & JSON serialisation / deserialisation \\
+  \rowcolor{rowshade}
+  room:runtime                    & 1.x  & SQLite ORM (offline local storage) \\
+  room:compiler                   & 1.x  & Room annotation processor \\
+  \rowcolor{rowshade}
+  okhttp3:okhttp                  & 3.x  & Underlying HTTP engine for Retrofit \\
+  okhttp3:logging-interceptor     & 3.x  & HTTP request/response logging \\
+  \rowcolor{rowshade}
+  junit                           & 4.x  & Unit testing framework \\
+\end{longtable}
+
+% ============================================================
+\section{docker-compose.yml — Service Summary}
+
+The four Docker services and their inter-dependencies:
+
+\vspace{0.5em}
+\begin{longtable}{p{3cm} p{4.5cm} p{2.8cm} p{2.8cm}}
+  \rowcolor{headerblue}
+  \color{white}\textbf{Service} &
+  \color{white}\textbf{Image} &
+  \color{white}\textbf{Depends On} &
+  \color{white}\textbf{Port} \\
+  \endfirsthead
+  \rowcolor{headerblue}
+  \color{white}\textbf{Service} &
+  \color{white}\textbf{Image} &
+  \color{white}\textbf{Depends On} &
+  \color{white}\textbf{Port} \\
+  \endhead
+  \texttt{db}               & \texttt{mysql:5.7}                    & —              & 3306 (internal) \\
+  \rowcolor{rowshade}
+  \texttt{backend}          & \texttt{openjdk:8-jdk-alpine} (build) & \texttt{db}    & 8080:8080 \\
+  \texttt{frontend-build}   & \texttt{node:6-alpine} (build only)   & —              & — \\
+  \rowcolor{rowshade}
+  \texttt{frontend}         & \texttt{nginx:alpine}                 & \texttt{backend} & 80:80 \\
+\end{longtable}
+
+\vspace{0.5em}
+Sample \texttt{docker-compose.yml}:
+
+\begin{lstlisting}[language=bash, caption=docker-compose.yml]
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: <secret>
+      MYSQL_DATABASE: landfill_eforms
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: <secret>
+    volumes:
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+
+  backend:
+    build: ./backend
+    depends_on: [db]
+    ports: ["8080:8080"]
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/landfill_eforms
+
+  frontend:
+    build: ./frontend    # Multi-stage: node:6-alpine build -> nginx:alpine
+    depends_on: [backend]
+    ports: ["80:80"]
+\end{lstlisting}
+
+\end{document}
