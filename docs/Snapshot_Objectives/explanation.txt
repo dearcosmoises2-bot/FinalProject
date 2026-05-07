@@ -1,3 +1,7 @@
-This folder contains the Snapshot Objectives files for the CS 3338 Final Project. These files are used to track the project’s starting objective, checkpoint progress, and final checkpoint status throughout the assignment.
+This folder contains the Snapshot Objectives files for the CS 3338 Final Project.
 
-The project topic is the Landfill e-Forms Application. The Snapshot Objectives focus on documenting project progress, organization of deliverables, and development of the required final project materials.
+These files are used to track the project’s starting objective, checkpoint progress, and final checkpoint status throughout the assignment.
+
+The project topic is the Landfill e-Forms Application.
+
+The Snapshot Objectives focus on documenting project progress, organization of deliverables, and development of the required final project materials.
