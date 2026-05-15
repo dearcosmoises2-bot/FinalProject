@@ -1,0 +1,369 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{hyperref}
+
+\title{Software Requirements Specification\\
+Landfill E-Forms Project}
+\author{
+Areli Arana \\
+Moises De Arcos \\
+Eric Lopez Perez \\
+Miguel Sanchez Saenz \\
+Kanishq Nileshbhai Viradiya
+}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\section*{Revision History}
+
+\begin{longtable}{|p{2cm}|p{3cm}|p{3cm}|p{5cm}|}
+\hline
+Version & Date & Author & Description \\ \hline
+1.0 & \today & Areli Arana & Initial Draft \\ \hline
+1.1 & \today & Moises De Arcos & Requirements Review \\ \hline
+1.2 & \today & Eric Lopez Perez & Architecture Updates \\ \hline
+1.3 & \today & Miguel Sanchez Saenzn & Interface Design Review \\ \hline
+1.4 & \today & Kanishq Nileshbhai Viradiya & Final Documentation Review  \\ \hline
+\end{longtable}
+\newpage
+
+\section{Introduction}
+
+\subsection{Purpose}
+
+The purpose of this Software Requirements Specification (SRS) document is to define the requirements for the Landfill E-Forms Project developed for the City of Los Angeles Department of Sanitation.
+
+The project replaces the current paper-based methane emission auditing process with a fully electronic system.
+
+\subsection{Intended Audience and Reading Suggestions}
+
+This document is intended for:
+
+\begin{itemize}
+\item Software Developers
+\item System Architects
+\item QA/Test Engineers
+\item Project Managers
+\item Business Analysts
+\item Department of Sanitation Stakeholders
+\item IT Support Personnel
+\end{itemize}
+
+\subsection{Product Scope}
+
+The Landfill E-Forms Project provides a digital methane emission auditing system consisting of:
+
+\begin{itemize}
+\item A mobile Android application for field inspectors
+\item A desktop web application for administration, data management, and reporting
+\end{itemize}
+
+The system objectives include:
+
+\begin{itemize}
+\item Eliminating paper-based forms
+\item Improving operational efficiency
+\item Reducing human error
+\item Accelerating report generation
+\item Centralizing audit data storage
+\item Improving data accessibility and accuracy
+\end{itemize}
+
+\subsection{Definitions, Acronyms, and Abbreviations}
+
+\begin{longtable}{|p{4cm}|p{8cm}|}
+\hline
+Term & Definition \\ \hline
+SRS & Software Requirements Specification \\ \hline
+UI & User Interface \\ \hline
+API & Application Programming Interface \\ \hline
+Android OS & Android Operating System \\ \hline
+Angular 4 & JavaScript front-end framework \\ \hline
+Spring Framework & Java back-end framework \\ \hline
+CRUD & Create, Read, Update, Delete \\ \hline
+\end{longtable}
+
+\subsection{References}
+
+\begin{itemize}
+\item IEEE 830 SRS Standard
+\item City of Los Angeles Department of Sanitation Requirements
+\item Android Development Documentation
+\item Angular 4 Documentation
+\item Java Spring Framework Documentation
+\end{itemize}
+
+\section{Overall Description}
+
+\subsection{System Analysis}
+
+The existing methane auditing process relies on paper forms that require manual processing and physical storage.
+
+The proposed system modernizes the workflow by enabling digital data collection, centralized storage, and automated reporting.
+
+\subsection{Product Perspective}
+
+The system consists of:
+
+\subsubsection*{Mobile Application}
+
+\begin{itemize}
+\item Runs on Android devices
+\item Used by field inspectors
+\item Supports offline data entry
+\item Stores inspection data locally
+\end{itemize}
+
+\subsubsection*{Web Application}
+
+\begin{itemize}
+\item Built with Angular 4 front-end
+\item Uses Java/Spring back-end services
+\item Provides centralized data management
+\item Generates reports and analytics
+\end{itemize}
+
+\subsection{Product Functions}
+
+\subsubsection*{Mobile Application}
+
+\begin{itemize}
+\item User login authentication
+\item Electronic inspection form entry
+\item Offline data collection
+\item Local record storage
+\item Data synchronization
+\end{itemize}
+
+\subsubsection*{Web Application}
+
+\begin{itemize}
+\item User management
+\item Inspection record management
+\item Search and filtering
+\item Report generation
+\item Data upload/download
+\item Audit tracking
+\end{itemize}
+
+\subsection{User Classes and Characteristics}
+
+\begin{longtable}{|p{4cm}|p{8cm}|}
+\hline
+User Class & Characteristics \\ \hline
+Inspectors & Use Android devices in the field for inspections \\ \hline
+Supervisors & Review inspection records and reports \\ \hline
+Administrators & Manage users and system configurations \\ \hline
+IT Personnel & Maintain and support the system \\ \hline
+\end{longtable}
+
+\subsection{Operating Environment}
+
+\subsubsection*{Mobile Environment}
+
+\begin{itemize}
+\item Android OS
+\item Android tablets or mobile devices
+\end{itemize}
+
+\subsubsection*{Web Environment}
+
+\begin{itemize}
+\item Windows desktop operating system
+\item Supported web browsers
+\item Java runtime environment
+\item Spring application server
+\end{itemize}
+
+\subsection{Design and Implementation Constraints}
+
+\begin{itemize}
+\item Mobile application must support Android OS
+\item Web application must use Angular 4
+\item Back-end services must use Java/Spring
+\item Synchronization must support USB hardwired connection
+\item System must comply with City IT policies
+\end{itemize}
+
+\subsection{User Documentation}
+
+\begin{itemize}
+\item User guides
+\item Installation manuals
+\item System administration manuals
+\item Troubleshooting documentation
+\item Training materials
+\end{itemize}
+
+\subsection{Assumptions and Dependencies}
+
+\begin{itemize}
+\item Inspectors are provided Android-compatible devices
+\item Users receive training before deployment
+\item Existing infrastructure supports Java/Spring applications
+\item Desktop systems support USB connectivity
+\end{itemize}
+
+\subsection{Apportioning of Requirements}
+
+Future releases may include:
+
+\begin{itemize}
+\item Wireless synchronization
+\item Cloud storage integration
+\item GIS mapping support
+\item Real-time reporting dashboards
+\end{itemize}
+
+\section{External Interface Requirements}
+
+\subsection{User Interfaces}
+
+\subsubsection*{Mobile User Interface}
+
+\begin{itemize}
+\item Touchscreen forms
+\item Validation prompts
+\item Sync status notifications
+\end{itemize}
+
+\subsubsection*{Web User Interface}
+
+\begin{itemize}
+\item Dashboard
+\item Administrative forms
+\item Reporting screens
+\item Search/filter tools
+\end{itemize}
+
+\subsection{Hardware Interfaces}
+
+\begin{itemize}
+\item Android tablets/mobile devices
+\item Desktop/laptop systems
+\item USB synchronization connections
+\end{itemize}
+
+\subsection{Software Interfaces}
+
+\begin{itemize}
+\item Android OS APIs
+\item Angular 4 framework
+\item Java/Spring framework
+\item Relational database management system
+\end{itemize}
+
+\subsection{Communications Interfaces}
+
+\begin{itemize}
+\item USB synchronization communication
+\item HTTP/HTTPS web communication
+\item Internal network communication
+\end{itemize}
+
+\section{System Requirements Specification}
+
+\subsection{Functional Requirements}
+
+\begin{itemize}
+\item FR-1 Authentication
+\item FR-2 Electronic Form Entry
+\item FR-3 Offline Data Storage
+\item FR-4 Data Synchronization
+\item FR-5 Report Generation
+\item FR-6 Search Functionality
+\item FR-7 User Management
+\item FR-8 Data Validation
+\end{itemize}
+
+\subsection{Logical Database Requirements}
+
+\begin{itemize}
+\item User records
+\item Inspection forms
+\item Audit logs
+\item Synchronization history
+\item Generated reports
+\end{itemize}
+
+\subsection{Design Constraints}
+
+\begin{itemize}
+\item Angular 4 front-end architecture
+\item Java/Spring back-end architecture
+\item Android OS compatibility
+\item Offline mobile support
+\end{itemize}
+
+\section{Other Nonfunctional Requirements}
+
+\subsection{Performance Requirements}
+
+\begin{itemize}
+\item Reports shall generate within 30 seconds
+\item Synchronization shall complete within 5 minutes
+\item System shall support multiple concurrent users
+\end{itemize}
+
+\subsection{Safety Requirements}
+
+\begin{itemize}
+\item Data backup mechanisms shall be implemented
+\item Synchronization failures shall not corrupt data
+\item Validation shall prevent incomplete records
+\end{itemize}
+
+\subsection{Security Requirements}
+
+\begin{itemize}
+\item Role-based access control
+\item Secure user authentication
+\item Encrypted communications
+\item Audit logging
+\end{itemize}
+
+\subsection{Software Quality Attributes}
+
+\begin{itemize}
+\item Reliability
+\item Maintainability
+\item Usability
+\item Scalability
+\end{itemize}
+
+\subsection{Business Rules}
+
+\begin{itemize}
+\item Inspection records must be stored electronically
+\item Reports must follow Department of Sanitation standards
+\item Only authorized users may access audit data
+\item All records must include timestamps
+\end{itemize}
+
+\section{Appendices}
+
+Additional diagrams and workflows may be included in future revisions.
+
+\section{Index}
+
+\begin{itemize}
+\item Android Application
+\item Angular 4
+\item Methane Auditing
+\item Reporting
+\item Synchronization
+\item Web Application
+\end{itemize}
+
+\end{document}
